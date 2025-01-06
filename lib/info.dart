@@ -4,12 +4,10 @@ import 'dart:io';
 import 'package:audio_waveforms/audio_waveforms.dart';
 import 'package:audioplayers/audioplayers.dart';
 import 'package:cat_control/controller/Maincontroller.dart';
+import 'package:cat_control/controller/NetworkController.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_joystick/flutter_joystick.dart';
 import 'package:get/get.dart';
-import 'package:get/get_core/src/get_main.dart';
-import 'package:get/get_state_manager/get_state_manager.dart';
-import 'package:path_provider/path_provider.dart';
 import 'package:ripple_wave/ripple_wave.dart';
 import 'package:wave_blob/wave_blob.dart';
 
@@ -26,6 +24,8 @@ class info extends StatefulWidget {
 class _infoState extends State<info> {
 
   Maincontroller contrller = Get.put(Maincontroller());
+
+  NetworkController networkController = Get.put(NetworkController());
 
   final player = AudioPlayer();
   var audio_encode;
@@ -137,6 +137,9 @@ class _infoState extends State<info> {
                                 var base64File = base64.encode(contents);
 
                                 print(base64File);
+
+                                networkController.sendMessage(base64File.toString());
+                                networkController.update();
 
 
 

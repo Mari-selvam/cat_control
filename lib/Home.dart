@@ -1,6 +1,7 @@
 
 import 'package:cat_control/Map_View.dart';
 import 'package:cat_control/controller/Maincontroller.dart';
+import 'package:cat_control/controller/NetworkController.dart';
 import 'package:cat_control/info.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_sliding_box/flutter_sliding_box.dart';
@@ -20,10 +21,10 @@ class Home extends StatefulWidget {
 
 class _HomeState extends State<Home> {
   final GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey<ScaffoldState>();
-  final BoxController _boxController = BoxController();
 
   Maincontroller controller = Get.put(Maincontroller());
-
+  
+  NetworkController networkController = Get.put(NetworkController());
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -279,41 +280,18 @@ class _HomeState extends State<Home> {
               ),
             ],
           ),
-          // Align(
-          //   alignment: Alignment.bottomCenter,
-          //   child: SlidingBox(
-          //     maxHeight: 300,
-          //     minHeight: 10,
-          //     width: double.infinity,
-          //     color: Colors.white,
-          //     borderRadius: BorderRadius.only(
-          //       topLeft: Radius.circular(30),
-          //       topRight: Radius.circular(30),
-          //     ),
-          //     body: Center(
-          //       child: Text(
-          //         'Slide Me!',
-          //         style: TextStyle(color: Colors.black, fontSize: 20),
-          //       ),
-          //     ),
-          //     onBoxSlide: (position) {
-          //       print('Sliding position: $position');
-          //     },
-          //   ),
-          // ),
         ],
       ),
-    //   floatingActionButton: FloatingActionButton(
-    //     onPressed: () {
-    //       _boxController.openBox();
-    //     },
-    
-    //   ),
+
 
     floatingActionButton: FloatingActionButton(
-  onPressed: () {
-    controller.rotateArrow(); // Call the rotateArrow method
-  },
+      onPressed: () {
+        controller.rotateArrow();
+        controller.update();
+
+        networkController.sendMessage("hi");
+        networkController.update();
+      },
   child: Icon(Icons.rotate_right),
 ),
 

@@ -1,9 +1,6 @@
 import 'package:cat_control/Home.dart';
-import 'package:cat_control/Mari.dart';
-import 'package:cat_control/socket_test.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:get/instance_manager.dart';
 import 'package:get/route_manager.dart';
 
 void main() {
@@ -14,6 +11,10 @@ void main() {
   ]);
 
   DeviceOrientation.landscapeRight;
+  
+
+
+
 }
 
 class MyApp extends StatefulWidget {
@@ -30,7 +31,7 @@ class _MyAppState extends State<MyApp> {
       home: 
     // MyApp(),
       Home(),
-      // WebSocketDemo(),
+      // Socket(),
       debugShowCheckedModeBanner: false,
     );
   }

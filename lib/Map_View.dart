@@ -1,5 +1,6 @@
 import 'package:cat_control/buttom.dart';
 import 'package:cat_control/controller/Maincontroller.dart';
+import 'package:cat_control/controller/NetworkController.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:get/get_core/src/get_main.dart';
@@ -15,29 +16,24 @@ class Map_View extends StatefulWidget {
 
 class _Map_ViewState extends State<Map_View> {
 
+  NetworkController networkController = Get.put(NetworkController());
+
   late GoogleMapController mapController;
   LocationData? currentLocation;
   final Location location = Location();
   BitmapDescriptor? customIcon;  
   
   Maincontroller controler = Get.put(Maincontroller());
-  bool _isSatelliteView = false;
+  // bool _isSatelliteView = false;
 
 
-
-
-  
-
-
-
-
-  
   @override
   void initState() {
     super.initState();
     _getLocation();
     _loadCustomMarker();
-
+    location_sent_socket();
+    
   }
 
   Future<void> _loadCustomMarker() async {
@@ -47,6 +43,44 @@ class _Map_ViewState extends State<Map_View> {
       height: 80,
       width: 80
     );
+  }
+
+
+  void location_sent_socket(){
+
+    if (currentLocation != null){
+      Map<String, dynamic> mapJson = {
+        'latitude': currentLocation!.latitude.toString(),
+        'longitude': currentLocation!.longitude.toString(),
+        'Accuracy': currentLocation!.accuracy,
+        'Speed': currentLocation!.speed,
+        'Speed_Accuracy': currentLocation!.speedAccuracy,
+        'status':'200'
+      };
+      networkController.sendJson(mapJson);
+
+      
+    }
+    else{
+      Map<String, dynamic> mapJson = {
+        'status':'404',
+      };
+
+
+      networkController.sendJson(mapJson);
+
+    }
+
+
+      
+}
+  DateTime lastSentTime = DateTime.now();
+
+  void checkAndSendLocation() {
+    if (DateTime.now().difference(lastSentTime).inSeconds >= 1) {
+      location_sent_socket();
+      lastSentTime = DateTime.now();
+    }
   }
 
 
@@ -77,18 +111,26 @@ class _Map_ViewState extends State<Map_View> {
   );
 
   
-    location.onLocationChanged.listen((LocationData currentLocation) {
-      print(currentLocation.latitude.toString());
-      setState(() {
-        this.currentLocation = currentLocation;
-      });
+
+  
+  location.onLocationChanged.listen((LocationData currentLocation) {
+    print(currentLocation.latitude.toString());
+    setState(() {
+      this.currentLocation = currentLocation;
     });
-  }
+
+    
+  });
+}
   
   
   void _onMapCreated(GoogleMapController controller) {
     mapController = controller;
   }
+
+  
+
+  
 
 
 
@@ -185,7 +227,6 @@ class _Map_ViewState extends State<Map_View> {
           width:870 ,
           height: 235,
           decoration: BoxDecoration(
-              // color: Colors.lightBlue,
               borderRadius: BorderRadius.circular(30)
               
 

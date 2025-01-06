@@ -17,6 +17,7 @@ class Maincontroller extends GetxController {
   bool audio_recording = false;
 
 
+
   double turns = 0.00;
 
 void rotateArrow() {

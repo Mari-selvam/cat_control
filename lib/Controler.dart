@@ -1,12 +1,19 @@
+import 'package:cat_control/controller/NetworkController.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
+import 'package:get/get_core/src/get_main.dart';
 import 'package:knob_widget/knob_widget.dart';
 
 class Controler extends StatefulWidget {
+
   @override
   State<Controler> createState() => _ControlerState();
 }
 
 class _ControlerState extends State<Controler> {
+
+  NetworkController networkController = Get.put(NetworkController());
+
   final double _minimum = 0;
   final double _maximum = 4;
   final double _step = 1; // Incremental step for smoother transitions
@@ -19,7 +26,13 @@ class _ControlerState extends State<Controler> {
       setState(() {
         // Round to the nearest step value
         _knobValue = (value / _step).round() * _step;
-        _knobValue = _knobValue.clamp(_minimum, _maximum); // Clamp within range
+        _knobValue = _knobValue.clamp(_minimum, _maximum);
+        Map <String, dynamic >jsonData = {
+            'speed': _knobValue.toInt()
+        };
+        networkController.sendJson(jsonData);
+        // print(jsonData);
+
       });
     }
   }

@@ -14,7 +14,7 @@ class _SocketState extends State<Socket> {
 
   final TextEditingController _controller = TextEditingController();
   final _channel = WebSocketChannel.connect(
-    Uri.parse('wss://echo.websocket.events'),
+    Uri.parse('ws://192.168.136.229:8080/audio/read_audio'),
   );
 
   @override
@@ -59,7 +59,7 @@ class _SocketState extends State<Socket> {
 
   @override
   void dispose() {
-    _channel.sink.close();
+    // _channel.sink.close();
     _controller.dispose();
     super.dispose();
   }
