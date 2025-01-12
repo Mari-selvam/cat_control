@@ -1,4 +1,7 @@
+import 'package:cat_control/controller/Maincontroller.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
+import 'package:get/route_manager.dart';
 
 class Obstracle extends StatefulWidget {
   const Obstracle({super.key});
@@ -8,6 +11,9 @@ class Obstracle extends StatefulWidget {
 }
 
 class _ObstracleState extends State<Obstracle> {
+
+  Maincontroller controler = Get.put(Maincontroller());
+
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -20,9 +26,8 @@ class _ObstracleState extends State<Obstracle> {
                     ),
 
                     child: Center(
-                      child: Text("obstacle"),
+                      
                     ),
-
                   );
   }
 }

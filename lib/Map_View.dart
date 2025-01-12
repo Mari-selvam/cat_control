@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:cat_control/buttom.dart';
 import 'package:cat_control/controller/Maincontroller.dart';
 import 'package:cat_control/controller/NetworkController.dart';
@@ -32,7 +34,6 @@ class _Map_ViewState extends State<Map_View> {
     super.initState();
     _getLocation();
     _loadCustomMarker();
-    location_sent_socket();
     
   }
 
@@ -48,6 +49,8 @@ class _Map_ViewState extends State<Map_View> {
 
   void location_sent_socket(){
 
+    print("location_sent_socket");
+
     if (currentLocation != null){
       Map<String, dynamic> mapJson = {
         'latitude': currentLocation!.latitude.toString(),
@@ -59,13 +62,11 @@ class _Map_ViewState extends State<Map_View> {
       };
       networkController.sendJson(mapJson);
 
-      
     }
     else{
       Map<String, dynamic> mapJson = {
         'status':'404',
       };
-
 
       networkController.sendJson(mapJson);
 
@@ -104,15 +105,14 @@ class _Map_ViewState extends State<Map_View> {
         return;
       }
     }
+
     location.changeSettings(
     accuracy: LocationAccuracy.high,
     interval: 100, // Update interval in milliseconds
     distanceFilter: 0.5, // Minimum distance change in meters to trigger an update
   );
 
-  
 
-  
   location.onLocationChanged.listen((LocationData currentLocation) {
     print(currentLocation.latitude.toString());
     setState(() {
@@ -121,23 +121,17 @@ class _Map_ViewState extends State<Map_View> {
 
     
   });
+
+  Timer.periodic(const Duration(seconds: 2), (timer) {
+  location_sent_socket();
+
+  });
 }
   
   
   void _onMapCreated(GoogleMapController controller) {
     mapController = controller;
   }
-
-  
-
-  
-
-
-
-
-
-
-
 
 
 

@@ -156,7 +156,7 @@ class _HomeState extends State<Home> {
             tooltip: "Home",
             ),
             BottomNavigationBarItem(
-              icon: Icon(Icons.emergency,color: Color(0xffA7A7AC),size: 40.0,),
+              icon: Icon(Icons.volume_up,color: Color(0xffA7A7AC),size: 40.0,),
               label: 'Emerangency ',
               
               

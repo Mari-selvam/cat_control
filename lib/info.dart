@@ -23,6 +23,11 @@ class info extends StatefulWidget {
 
 class _infoState extends State<info> {
 
+  double _x = 0;
+  double _y = 0;
+  var step = 10.0;
+
+
   Maincontroller contrller = Get.put(Maincontroller());
 
   NetworkController networkController = Get.put(NetworkController());
@@ -60,7 +65,7 @@ class _infoState extends State<info> {
                           image: DecorationImage(image: AssetImage("assets/chair-top.png")),
                         ),
                       ),
-            color: const Color.fromARGB(255, 39, 255, 151),
+            color: const Color.fromARGB(255, 39, 255, 226),
     
             waveCount: 5,
 
@@ -175,7 +180,20 @@ class _infoState extends State<info> {
                           arrowsDecoration: JoystickArrowsDecoration(      
                             color: Colors.blue,    
                             ),  ),  
-                            listener: (details) {},)
+                            listener: (details) {
+                                setState(() {
+                                    _x = (details.x * 100).roundToDouble();
+                                    _y = (details.y * 100).roundToDouble();
+                                    print("($_x, $_y)");
+
+                              });
+
+                            },
+                            
+                            
+                            
+                            
+                        )
                     
                   ),
                 ),
