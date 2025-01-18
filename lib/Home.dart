@@ -1,5 +1,6 @@
 
 import 'package:cat_control/Map_View.dart';
+import 'package:cat_control/Settings.dart';
 import 'package:cat_control/controller/Maincontroller.dart';
 import 'package:cat_control/controller/NetworkController.dart';
 import 'package:cat_control/info.dart';
@@ -156,19 +157,25 @@ class _HomeState extends State<Home> {
             tooltip: "Home",
             ),
             BottomNavigationBarItem(
-              icon: Icon(Icons.volume_up,color: Color(0xffA7A7AC),size: 40.0,),
+              icon: Icon(controller.audio_icon,color: Color(0xffA7A7AC),size: 40.0,),
               label: 'Emerangency ',
+              
               
               
               
               ),
 
 
-
-
             BottomNavigationBarItem(
               icon: Icon(Icons.location_on,color: Color(0xffA7A7AC),size: 40.0,),
               label: 'location',
+              
+              
+              
+              ),
+              BottomNavigationBarItem(
+              icon: Icon(Icons.bug_report,color: Color(0xffA7A7AC),size: 40.0,),
+              label: 'Terminal',
               
               
               
@@ -183,55 +190,45 @@ class _HomeState extends State<Home> {
 
               if (index == 1){
                 showGeneralDialog(
-                  context: context,
-                  barrierDismissible: true,
-                  barrierLabel: MaterialLocalizations.of(context).modalBarrierDismissLabel,
-                  barrierColor: Colors.black45,
-                  transitionDuration: const Duration(milliseconds: 200),
-                  pageBuilder: (BuildContext buildContext, Animation animation, Animation secondaryAnimation) {
-                    return Center(
-                      child: Container(
-                        width: Get.width / 2.0,
-                        height: Get.height / 2.0,
-                        decoration: BoxDecoration(
-                          borderRadius: BorderRadius.circular(30.0),
-                          color: Colors.white,
-                        ),
-                        child: Column(
-                          mainAxisAlignment: MainAxisAlignment.start,
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
+                          context: context,
+                          barrierDismissible: true,
+                          barrierLabel: MaterialLocalizations.of(context).modalBarrierDismissLabel,
+                          barrierColor: Colors.black26,
+                          transitionDuration: const Duration(milliseconds: 200),
+                          pageBuilder: (BuildContext buildContext, Animation animation, Animation secondaryAnimation) {
+                            return Center(
+                              child: Container(
+                                width: Get.width / 2.0,
+                                height: Get.height / 2.0,
+                                decoration: BoxDecoration(
+                                  borderRadius: BorderRadius.circular(30.0),
+                                  color: Colors.white,
+                                ),
+                                child: Center( // Center aligns the text inside the container
+                                  child: Text(
+                                    "data",
+                                    style: TextStyle(
+                                      fontSize: 20.0, // Adjust font size here
+                                      fontWeight: FontWeight.bold,
+                                      color: Colors.red, // Match the color as in the image
+                                    ),
+                                    textAlign: TextAlign.center, // Center-align text
+                                  ),
+                                ),
+                              ),
+                            );
+                          },
+                          transitionBuilder: (context, animation, secondaryAnimation, child) {
+                            return SlideTransition(
+                              position: Tween<Offset>(
+                                begin: const Offset(0, 1),
+                                end: Offset.zero,
+                              ).animate(animation),
+                              child: child,
+                            );
+                          },
+                        )
 
-                          
-                            TextButton(
-                              onPressed: () {
-                              controller.mapType = MapType.satellite;
-                              controller.update();
-                              },
-                              child: Text("Map"),
-                            )
-
-                          
-                            
-                          ],
-                        ),
-                      
-
-
-                      
-                      ),
-                    );
-                  },
-                  transitionBuilder: (context, animation, secondaryAnimation, child) {
-                    return SlideTransition(
-                      position: Tween<Offset>(
-                        begin: const Offset(0, 1),
-                        end: Offset.zero,
-                      ).animate(animation),
-                      child: child,
-                    );
-                  },
-                )
               }
 
               else if (index == 3){
@@ -249,10 +246,16 @@ class _HomeState extends State<Home> {
                 controller.update()
                 
                 }
+
                 
                 
 
                 
+              }
+
+              else if( index == 2){
+                controller.audio_icon = Icons.volume_mute,
+                controller.update()
               }
 
               
