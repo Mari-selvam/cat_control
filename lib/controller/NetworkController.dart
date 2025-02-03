@@ -16,12 +16,12 @@ class NetworkController extends GetxController{
 
 
   final _channel = WebSocketChannel.connect(
-    Uri.parse('ws://192.168.210.229:8000/audio/read_audio'),
+    Uri.parse('ws://192.168.140.229:8000/audio/read_audio'),
   );
 
 
   final sensor_channel = WebSocketChannel.connect(
-    Uri.parse('ws://192.168.210.229:8000/sensor/status'),
+    Uri.parse('ws://192.168.140.229:8000/sensor/status'),
   );
 
 

@@ -206,7 +206,7 @@ class _HomeState extends State<Home> {
                                 ),
                                 child: Center( // Center aligns the text inside the container
                                   child: Text(
-                                    "data",
+                                    "data", 
                                     style: TextStyle(
                                       fontSize: 20.0, // Adjust font size here
                                       fontWeight: FontWeight.bold,

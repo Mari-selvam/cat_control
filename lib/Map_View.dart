@@ -26,7 +26,6 @@ class _Map_ViewState extends State<Map_View> {
   BitmapDescriptor? customIcon;  
   
   Maincontroller controler = Get.put(Maincontroller());
-  // bool _isSatelliteView = false;
 
 
   @override
@@ -49,7 +48,7 @@ class _Map_ViewState extends State<Map_View> {
 
   void location_sent_socket(){
 
-    print("location_sent_socket");
+    // print("location_sent_socket");
 
     if (currentLocation != null){
       Map<String, dynamic> mapJson = {
@@ -58,7 +57,9 @@ class _Map_ViewState extends State<Map_View> {
         'Accuracy': currentLocation!.accuracy,
         'Speed': currentLocation!.speed,
         'Speed_Accuracy': currentLocation!.speedAccuracy,
-        'status':'200'
+        'status':'200',
+        'compass':controler.angle,
+
       };
       networkController.sendJson(mapJson);
 

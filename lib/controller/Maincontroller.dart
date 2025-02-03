@@ -19,13 +19,15 @@ class Maincontroller extends GetxController {
 
   var audio_icon = Icons.volume_up;
 
+  double angle = 0;
+
 
 
   double turns = 0.00;
 
-void rotateArrow() {
-    turns += 0.25; // Rotate 90 degrees
-    update(); // Notify listeners to rebuild UI
+  void rotateArrow() {
+    turns += 0.25; 
+    update();
   }
 
 
