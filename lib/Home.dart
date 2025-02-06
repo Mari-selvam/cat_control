@@ -1,14 +1,15 @@
 
 import 'package:cat_control/Map_View.dart';
 import 'package:cat_control/Settings.dart';
+// import 'package:cat_control/Settings.dart';
 import 'package:cat_control/controller/Maincontroller.dart';
 import 'package:cat_control/controller/NetworkController.dart';
 import 'package:cat_control/info.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_sliding_box/flutter_sliding_box.dart';
+// import 'package:flutter_sliding_box/flutter_sliding_box.dart';
 import 'package:get/get.dart';
-import 'package:google_maps_flutter/google_maps_flutter.dart';
-import 'package:location/location.dart';
+// import 'package:google_maps_flutter/google_maps_flutter.dart';
+// import 'package:location/location.dart';
 
 
 class Home extends StatefulWidget {
@@ -189,45 +190,12 @@ class _HomeState extends State<Home> {
             onTap: (index) => {
 
               if (index == 1){
-                showGeneralDialog(
-                          context: context,
-                          barrierDismissible: true,
-                          barrierLabel: MaterialLocalizations.of(context).modalBarrierDismissLabel,
-                          barrierColor: Colors.black26,
-                          transitionDuration: const Duration(milliseconds: 200),
-                          pageBuilder: (BuildContext buildContext, Animation animation, Animation secondaryAnimation) {
-                            return Center(
-                              child: Container(
-                                width: Get.width / 2.0,
-                                height: Get.height / 2.0,
-                                decoration: BoxDecoration(
-                                  borderRadius: BorderRadius.circular(30.0),
-                                  color: Colors.white,
-                                ),
-                                child: Center( // Center aligns the text inside the container
-                                  child: Text(
-                                    "data", 
-                                    style: TextStyle(
-                                      fontSize: 20.0, // Adjust font size here
-                                      fontWeight: FontWeight.bold,
-                                      color: Colors.red, // Match the color as in the image
-                                    ),
-                                    textAlign: TextAlign.center, // Center-align text
-                                  ),
-                                ),
-                              ),
-                            );
-                          },
-                          transitionBuilder: (context, animation, secondaryAnimation, child) {
-                            return SlideTransition(
-                              position: Tween<Offset>(
-                                begin: const Offset(0, 1),
-                                end: Offset.zero,
-                              ).animate(animation),
-                              child: child,
-                            );
-                          },
-                        )
+                
+                controller.view =! controller.view,
+                print(controller.view),
+                controller.update()
+               
+                
 
               }
 
@@ -276,8 +244,24 @@ class _HomeState extends State<Home> {
               Expanded(
                 child: Row(
                   children: [
-                    Expanded(child: info(), flex: 3),
-                    Expanded(child: Map_View(), flex: 7),
+                    SizedBox(width: 10,),
+                    GetBuilder<Maincontroller>(builder: 
+                    (controller) =>
+                      controller.view ?
+                      Expanded(child: info(), flex: 3):
+
+                      Expanded(child: Settings(), flex: 3)
+                    ),
+
+                    Expanded(child: Map_View(), flex: 7)
+
+                  
+                    
+                        
+
+
+                   
+
                   ],
                 ),
               ),
@@ -298,6 +282,55 @@ class _HomeState extends State<Home> {
   child: Icon(Icons.rotate_right),
 ),
 
+  );
+  }
+
+}
+
+
+void _showSettingsDialog(BuildContext context) {
+    var IP_address;
+    TextEditingController textController = TextEditingController(text: IP_address);
+
+    showDialog(
+      context: context,
+      builder: (context) {
+        return AlertDialog(
+
+          title: Text("App Settings"),
+          content: Container(
+            height: 200,
+            width: 300,
+            child: Column(
+              children: [
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    Text("Dark Mode"),
+                    
+                  ],
+                  
+                ),
+                SizedBox(height: 10,),
+                Row(children: [
+                  Text("IP : "),
+                   
+                    
+                  ],
+
+                ),
+              ],
+              
+            
+            ),
+          ),
+          actions: [
+            TextButton(
+              onPressed: () => Navigator.pop(context),
+              child: Text("Close"),
+            ),
+          ],
+        );
+      },
     );
   }
-}

@@ -36,7 +36,7 @@ class _ObstracleState extends State<Obstracle> {
       width: 235,
       decoration: BoxDecoration(
         borderRadius: BorderRadius.circular(30.0),
-        color: Colors.lightBlue[100],
+        color: Colors.white,
       ),
       child: Center(
         child: _hasPermissions ? _buildCompass() : _buildPermissionSheet(),
@@ -59,6 +59,11 @@ class _ObstracleState extends State<Obstracle> {
         }
 
         double? direction = snapshot.data!.heading;
+        // angle = ((direction! * (math.pi / 180)) * -1);
+        // print(direction);
+
+        controler.angle = direction!;
+
  
 
 
@@ -66,13 +71,7 @@ class _ObstracleState extends State<Obstracle> {
           DateTime lastSentTime = DateTime.now();
 
 
-        if (DateTime.now().difference(lastSentTime).inSeconds >= 1) {
-            lastSentTime = DateTime.now();
-            angle = ((direction! * (math.pi / 180)) * -1);
-            controler.angle =angle;
-            controler.update(); 
 
-          }
 
 
         if (direction == null) {
@@ -80,11 +79,14 @@ class _ObstracleState extends State<Obstracle> {
             child: Text("Device does not have sensors!"),
           );
         }
+        else{
+          
+        }
 
         return Material(
           shape: CircleBorder(),
           clipBehavior: Clip.antiAlias,
-          elevation: 4.0,
+          // elevation: 4.0,
           child: Container(
             padding: EdgeInsets.all(16.0),
             alignment: Alignment.center,
@@ -95,6 +97,7 @@ class _ObstracleState extends State<Obstracle> {
               angle: (direction * (math.pi / 180) * -1),
               child: Image.asset('assets/compuss.png'),
             ),
+          
           ),
         );
       },

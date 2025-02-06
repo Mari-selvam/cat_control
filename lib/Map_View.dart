@@ -61,6 +61,9 @@ class _Map_ViewState extends State<Map_View> {
         'compass':controler.angle,
 
       };
+
+      controler.location_accuracy = currentLocation!.accuracy!;
+      controler.update();
       networkController.sendJson(mapJson);
 
     }
@@ -150,99 +153,138 @@ class _Map_ViewState extends State<Map_View> {
       
         polylineId: PolylineId('polygon'),
         points: polygonCoords,
-        color: Colors.black,
-        width: 15,
+        color: Colors.blue,
+        width: 10,
       
 
     );
 
-    return Column(
-      children: [
-
-        Padding(
-          padding: const EdgeInsets.only(top: 10.0),
-          child: Container(
-            width: 870,
-            height: 400,
-
-              
-            decoration: BoxDecoration(
-        
-              color: Colors.black,
-
-              borderRadius: BorderRadius.circular(30)
-
-            ),
-            child:ClipRRect(
-                  borderRadius: BorderRadius.circular(30), // Adjust the radius as needed
-                  child: currentLocation == null ? Center(child: CircularProgressIndicator())
-                  : 
-                  GoogleMap(
-              onMapCreated: _onMapCreated,
-              initialCameraPosition: CameraPosition(
-                target: LatLng(currentLocation!.latitude!, currentLocation!.longitude!),
-                zoom: 25,
+    return SingleChildScrollView(
+      child: Column(
+        children: [
+      
+          Padding(
+            padding: const EdgeInsets.only(top: 10.0),
+            child: Container(
+              width: 870,
+              height: 400,
+      
+                
+              decoration: BoxDecoration(
+          
+                color: Colors.black,
+      
+                borderRadius: BorderRadius.circular(30)
+      
               ),
-              mapType: controler.mapType,
-              mapToolbarEnabled: false,
-              // polylines: {polygon},
-              indoorViewEnabled: true,
-              fortyFiveDegreeImageryEnabled: bool.fromEnvironment("false"),
-
-
-
-
-
-              markers: {
-                if(currentLocation != null)
-                  Marker(
-                    markerId: MarkerId('currentLocation'),
-                    position: LatLng(currentLocation!.latitude!, currentLocation!.longitude!),
-                    icon: customIcon ?? BitmapDescriptor.defaultMarker,
-                    
-                    
-                    )
-                
-                
-              },
-              
+              child:ClipRRect(
+                    borderRadius: BorderRadius.circular(30), // Adjust the radius as needed
+                    child: currentLocation == null ? Center(child: CircularProgressIndicator())
+                    : GetBuilder<Maincontroller>(
+                        builder: (controler) => controler.map ?
+      
+                              GoogleMap(
+                          onMapCreated: _onMapCreated,
+                          initialCameraPosition: CameraPosition(
+                            target: LatLng(currentLocation!.latitude!, currentLocation!.longitude!),
+                            zoom: 35,
+                          ),
+                            mapType: controler.map ? MapType.satellite : MapType.normal,
+                            
+                          
+                          mapToolbarEnabled: false,
+                          polylines: {polygon},
+                          indoorViewEnabled: true,
+                          fortyFiveDegreeImageryEnabled: bool.fromEnvironment("false"),
+      
+      
+      
+      
+      
+                          markers: {
+                            if(currentLocation != null)
+                              Marker(
+                                markerId: MarkerId('currentLocation'),
+                                position: LatLng(currentLocation!.latitude!, currentLocation!.longitude!),
+                                icon: customIcon ?? BitmapDescriptor.defaultMarker,
+                                
+                                
+                                )
+                            
+                            
+                          },
+                          
+                        ):
+                        GoogleMap(
+                            onMapCreated: _onMapCreated,
+                            initialCameraPosition: CameraPosition(
+                              target: LatLng(currentLocation!.latitude!, currentLocation!.longitude!),
+                              zoom: 35,
+                            ),
+                              mapType: controler.map ? MapType.satellite : MapType.normal,
+                              
+                            
+                            mapToolbarEnabled: false,
+                            polylines: {polygon},
+                            indoorViewEnabled: true,
+                            fortyFiveDegreeImageryEnabled: bool.fromEnvironment("false"),
+      
+      
+      
+      
+      
+                            markers: {
+                              if(currentLocation != null)
+                                Marker(
+                                  markerId: MarkerId('currentLocation'),
+                                  position: LatLng(currentLocation!.latitude!, currentLocation!.longitude!),
+                                  icon: customIcon ?? BitmapDescriptor.defaultMarker,
+                                  
+                                  
+                                  )
+                              
+                              
+                            },     
+              ),
+      
+                  ),
             ),
-                ),
+            
+      
+          ),
+          ),
+          SizedBox(height: 10),
+          
+          Container(
+      
+          
+            padding: EdgeInsets.only(top: 10.0),
+          
+            width:870 ,
+            height: 235,
+            decoration: BoxDecoration(
+                borderRadius: BorderRadius.circular(30)
+                
+      
+              ),
+              
+      
+      
+              
+      
+              child: bottom()
+              
+            
+              
+              
+              
           ),
           
-
-        ),
-        SizedBox(height: 10,),
         
-        Container(
-
+        ],
         
-          padding: EdgeInsets.only(top: 10.0),
         
-          width:870 ,
-          height: 235,
-          decoration: BoxDecoration(
-              borderRadius: BorderRadius.circular(30)
-              
-
-            ),
-            
-
-
-            
-
-            child: bottom()
-            
-          
-            
-            
-            
-        ),
-        
-      
-      ],
-      
-      
+      ),
     );
   }
 }

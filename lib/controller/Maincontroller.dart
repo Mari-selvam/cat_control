@@ -1,15 +1,37 @@
+import 'dart:async';
+import 'dart:ffi';
+
 import 'package:audio_waveforms/audio_waveforms.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:get/get_state_manager/get_state_manager.dart';
-import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:location/location.dart';
 
 class Maincontroller extends GetxController {
 
+  bool map = false;
+
+  var address = "".obs ;
+
+  double location_accuracy = 0;
+
+  dynamic pi = 3.14;
+  
+
+  void Calculate_angle(A){
+
+    // print("Angle");
+    // print((angle * ( pi/ 180) * -1),);
+    //  print("Direction ");
+    // print(angle);
 
 
-  var mapType = MapType.normal;
+  }
+  
 
+
+  var x;
+  var y;
 
 
   bool mic = true;
@@ -24,6 +46,8 @@ class Maincontroller extends GetxController {
 
 
   double turns = 0.00;
+
+  bool view = true;
 
   void rotateArrow() {
     turns += 0.25; 
@@ -53,6 +77,8 @@ class Maincontroller extends GetxController {
 
       _getLocation();
       recorderController.checkPermission();
+
+      Timer.periodic(Duration(seconds: 1), Calculate_angle);
 
     }
 

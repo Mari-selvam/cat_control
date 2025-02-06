@@ -159,7 +159,7 @@ class _infoState extends State<info> {
 
                             
                       }, 
-                          child:Image.asset("assets/mic.png",height: 140,width: 150,)),
+                          child:Image.asset("assets/mic.png",height: 140/2,width: 150/2,)),
                           amplitude: controller.audio_recording ? 5000:100,
 
                           ),
@@ -184,7 +184,21 @@ class _infoState extends State<info> {
                                 setState(() {
                                     _x = (details.x * 100).roundToDouble();
                                     _y = (details.y * 100).roundToDouble();
+
                                     print("($_x, $_y)");
+
+                                    Map <dynamic,double> joy_stick = {
+                                      "x":_x,
+                                      "y":_y
+
+                                    };
+
+                                    
+
+
+
+                                  networkController.sendJson(joy_stick.cast<String, double>());
+
 
                               });
 
