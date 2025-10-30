@@ -127,9 +127,9 @@ class _infoState extends State<info> {
 
                               if (controller.recorderController.isRecording) {
                                   controller.recordedFilePath = await controller.recorderController.stop();
-                                  print("xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx");
-                                  print(controller.recordedFilePath);
-                                  print("xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx");
+                                  // print("xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx");
+                                  // print(controller.recordedFilePath);
+                                  // print("xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx");
 
 
                                 player.play(UrlSource(controller.recordedFilePath.toString()));
@@ -197,7 +197,7 @@ class _infoState extends State<info> {
 
 
 
-                                  networkController.sendJson(joy_stick.cast<String, double>());
+                                  networkController.Joystick_data(joy_stick.cast<String, double>());
 
 
                               });

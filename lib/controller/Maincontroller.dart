@@ -7,15 +7,22 @@ import 'package:get/get.dart';
 import 'package:get/get_state_manager/get_state_manager.dart';
 import 'package:location/location.dart';
 
+
+
 class Maincontroller extends GetxController {
 
   bool map = false;
+
+
+  List poly_points = [];
 
   var address = "".obs ;
 
   double location_accuracy = 0;
 
   dynamic pi = 3.14;
+
+  var speed = 0;
   
 
   void Calculate_angle(A){

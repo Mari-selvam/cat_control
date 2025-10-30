@@ -55,7 +55,7 @@ class _Map_ViewState extends State<Map_View> {
         'latitude': currentLocation!.latitude.toString(),
         'longitude': currentLocation!.longitude.toString(),
         'Accuracy': currentLocation!.accuracy,
-        'Speed': currentLocation!.speed,
+        'Gps_Speed': currentLocation!.speed,
         'Speed_Accuracy': currentLocation!.speedAccuracy,
         'status':'200',
         'compass':controler.angle,

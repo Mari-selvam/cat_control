@@ -1,6 +1,5 @@
 import 'dart:convert';
 import 'package:cat_control/controller/Maincontroller.dart';
-import 'package:flutter_joystick/flutter_joystick.dart';
 import 'package:get/get.dart';
 import 'package:web_socket_channel/web_socket_channel.dart';
 
@@ -10,6 +9,8 @@ class NetworkController extends GetxController {
   WebSocketChannel? _channel;
   WebSocketChannel? sensor_channel;
   WebSocketChannel ? joy_stick;
+  WebSocketChannel ? speed;
+
 
   String address = "";
 
@@ -40,6 +41,9 @@ class NetworkController extends GetxController {
       await sensor_channel?.sink.close();
       _channel = null;
       sensor_channel = null;
+      joy_stick = null;
+      speed = null;
+
     } catch (e) {
       print('Error closing WebSocket: $e');
     }
@@ -61,12 +65,17 @@ class NetworkController extends GetxController {
     joy_stick = WebSocketChannel.connect(
       Uri.parse('ws://$ip:8000/joy_stick'),
     );
+    speed = WebSocketChannel.connect(
+      Uri.parse('ws://$ip:8000/speed'),
+    );
 
 
-    joy_stick?.stream.listen(
+  joy_stick?.stream.listen(
 
-       (message) {
+      (message) {
         print('Received from audio stream: $message');
+
+        
       },
       onError: (error) {
         print('Audio WebSocket error: $error');
@@ -79,7 +88,7 @@ class NetworkController extends GetxController {
 
     _channel?.stream.listen(
       (message) {
-        print('Received from audio stream: $message');
+        print('Received from audio stream: $message');   
       },
       onError: (error) {
         print('Audio WebSocket error: $error');
@@ -100,6 +109,26 @@ class NetworkController extends GetxController {
         print('Sensor WebSocket closed.');
       },
     );
+
+
+
+
+    speed?.stream.listen(
+
+       (message) {
+        print('Received from audio stream: $message');
+
+        
+      },
+      onError: (error) {
+        print('Audio WebSocket error: $error');
+      },
+      onDone: () {
+        print('Audio WebSocket closed.');
+      },
+
+    );
+
   }
 
   void updateIp(String newIp) {
@@ -130,7 +159,17 @@ class NetworkController extends GetxController {
   void Joystick_data(Map<String, dynamic> jsonData) {
     try {
       String jsonString = jsonEncode(jsonData);
-      sensor_channel?.sink.add(jsonString);
+      joy_stick?.sink.add(jsonString);
+    } catch (e) {
+      print('Error sending JSON data: $e');
+    }
+  }
+
+
+  void send_speed(Map<String, dynamic> jsonData) {
+    try {
+      String jsonString = jsonEncode(jsonData);
+      speed?.sink.add(jsonString);
     } catch (e) {
       print('Error sending JSON data: $e');
     }

@@ -1,4 +1,3 @@
-import 'dart:ffi';
 
 import 'package:cat_control/controller/Maincontroller.dart';
 import 'package:cat_control/controller/NetworkController.dart';
@@ -113,21 +112,21 @@ class _SettingsState extends State<Settings> {
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
               
-               Container(
-                padding: EdgeInsets.all(15),
-                child:  Text("test",style: TextStyle(
-                fontSize: 20,
-                fontWeight: FontWeight.bold
-              )                 
-            ),
-          ),
-          Switch(value: controller.map, 
-            onChanged: (Value){
-              setState(() {
-                controller.map =! controller.map;
-                controller.update();
-              });
-            })
+          //      Container(
+          //       padding: EdgeInsets.all(15),
+          //       child:  Text("test",style: TextStyle(
+          //       fontSize: 20,
+          //       fontWeight: FontWeight.bold
+          //     )                 
+          //   ),
+          // ),
+          // Switch(value: controller.map, 
+          //   onChanged: (Value){
+          //     setState(() {
+          //       controller.map =! controller.map;
+          //       controller.update();
+          //     });
+          //   })
 
             ],
           ),
@@ -139,9 +138,9 @@ class _SettingsState extends State<Settings> {
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
               
-               Container(
+              Container(
                 padding: EdgeInsets.all(15),
-                child:  Text("Location",style: TextStyle(
+                child:  Text("Location Accuracy",style: TextStyle(
                 fontSize: 20,
                 fontWeight: FontWeight.bold
               )                 
@@ -152,7 +151,7 @@ class _SettingsState extends State<Settings> {
             builder: (controller) {
               return Container(
               padding: EdgeInsets.all(15),
-                child:  Text("${controller.location_accuracy }",style: TextStyle(
+                child:  Text("${controller.location_accuracy.toInt() } Meters",style: TextStyle(
                 fontSize: 20,
                 fontWeight: FontWeight.bold
               )                 
